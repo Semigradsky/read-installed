@@ -96,7 +96,7 @@ try {
 var path = require("path")
 var asyncMap = require("slide").asyncMap
 var semver = require("semver")
-var readJson = require("read-package-json")
+var packageJson = require('@npmcli/package-json')
 
 var debug = require("debug")("read-installed")
 
@@ -161,15 +161,17 @@ function readInstalled_ (folder, parent, name, reqver, depth, opts, cb) {
       next()
     })
 
-  readJson(path.resolve(folder, "package.json"), function (er, data) {
-    obj = copy(data)
-
+  packageJson.load(path.resolve(folder)).then(function (data) {
+    obj = copy(data.content);
+    return next();
+  }).catch(function (er) {
+    obj = undefined;
     if (!parent) {
-      obj = obj || true
-      er = null
+      obj = true;
+      er = null;
     }
-    return next(er)
-  })
+    return next(er);
+  });
 
   fs.lstat(folder, function (er, st) {
     if (er) {
