@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@npmcli/fs": "^3.1.0",
+    "@npmcli/package-json": "^6.1.1",
     "debug": "^4.3.4",
-    "read-package-json": "^6.0.0",
     "semver": "2 || 3 || 4 || 5 || 6 || 7",
     "slide": "~1.1.3"
   },
